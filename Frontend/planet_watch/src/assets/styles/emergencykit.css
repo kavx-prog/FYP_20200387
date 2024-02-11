@@ -1,0 +1,27 @@
+button.active {
+    background-color:rgb(9, 11, 9);
+    border: 1px  solid green; /* Change the background color for the selected button */
+    color: white;
+  
+   
+    padding: 10px;
+    width: 300px;
+    height: 50px;
+    font-weight: bold;
+   /* Change the text color for the selected button */
+    /* Add other styling as needed */
+  }
+
+  button {
+    background-color: #98FB98; /* Change the background color for the selected button */
+    color: #000000;
+    border: none; 
+    padding: 10px;
+    width: 300px;
+    height: 50px;
+    font-weight: bold;
+    margin: 100px;
+   /* Change the text color for the selected button */
+    /* Add other styling as needed */
+  }
+  
