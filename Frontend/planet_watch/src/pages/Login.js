@@ -1,0 +1,138 @@
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { Container } from "react-bootstrap";
+import axiosInstance from "../axios";
+import "../assets/styles/accountpopup.css";
+import { Link } from "react-router-dom";
+function Login() {
+  return (
+    <div style={{ backgroundColor: "white" }}>
+      <div class="row ">
+        <div class="col" style={{ backgroundColor: "black" }}>
+          <div>
+            <img
+              src={require("../assets/images/logo.png")}
+              height={"80px"}
+              style={{ float: "left" }}
+            ></img>
+          </div>
+          <img
+            src={require("../assets/images/earthsave.jpeg")}
+            class="img-fluid rounded-start"
+            alt="..."
+            style={{ width: "100%" }}
+          />
+        </div>
+        <div class="col">
+          <br></br> <br></br> <br></br>
+          <p style={{ fontSize: "36px", fontWeight: "700", color: "#3A3541" }}>
+            Sign in
+          </p>
+          <p
+            style={{
+              fontSize: "14px",
+              fontWeight: "400",
+              color: "#3A3541",
+              paddingTop: "0px",
+            }}
+          >
+            Welcome back!
+          </p>
+          <p>
+            Don't have an account?{" "}
+            <a href="/signup" style={{ textDecoration: "none" }}>
+              Sign up
+            </a>
+          </p>
+          <form>
+            <div class="mb-3">
+              <label
+                for="exampleInputUsername"
+                class="form-label text-muted"
+                style={{ color: "black" }}
+              >
+                Username
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                aria-describedby="emailHelp"
+                required="true"
+              />
+              {/* <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> */}
+            </div>
+            <div class="mb-3">
+              <label
+                for="exampleInputPassword1"
+                class="form-label text-muted"
+                style={{ color: "black" }}
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                required="true"
+              />
+            </div>
+            <div class="mb-3 form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="exampleCheck1"
+              />
+              <label class="form-check-label" for="exampleCheck1">
+                Check me out
+              </label>
+              <a href="" style={{ float: "right", textDecoration: "none" }}>
+                Forgot passowrd?
+              </a>
+            </div>
+
+            <div class="d-grid gap-2">
+            <Link to="/dashboard" style={{ textDecoration: "none" }}>
+              <button
+                type="submit"
+                style={{
+                  border: "none",
+                  borderRadius: "5px",
+                  backgroundColor: "#51B737",
+                  color: "white",
+                  height: "40px",
+                }}
+              >
+                Submit
+              </button>
+              </Link>
+            </div>
+            <center>
+              <p style={{ color: "red" }}></p>
+            </center>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+export default Login;
+
+{
+  /* <form>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1">
+  </div>
+  <div class="mb-3 form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form> */
+}
