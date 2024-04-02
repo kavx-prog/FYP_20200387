@@ -52,16 +52,16 @@ function App() {
         <Route exact path="/" Component={Homepage} />
         <Route exact path="/login" Component={Login} />
         <Route exat path="/signup" Component={Signup} />
-      </Routes>
-      <Routes>
-        <Route element={<PrivateRoutes />}>
+      {/* </Routes> */}
+      {/* <Routes> */}
+        {/* <Route element={<PrivateRoutes />}> */}
           <Route path="/airquality" element={<AQIMap />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route exact path="/emergencykit" Component={EmergencyKit} />
           <Route exact path="/floodtips" Component={FloodTips} />
           <Route exact path="/landslidetips" Component={LandslideTips} />
           <Route exact path="/cyclonetips" Component={CycloneTips} />
-        </Route>
+        {/* </Route> */}
 
         {/* Transportation emission estimation */}
         <Route path="/road" element={<Road />} />
