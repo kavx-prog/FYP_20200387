@@ -102,7 +102,7 @@ class Location(models.Model):
 
     def __str__(self):
         return self.locationName
-##
+
 class Thunder (models.Model):
     prediction = models.CharField(max_length=1)
     temp_min = models.DecimalField(max_digits=4,decimal_places=1)
