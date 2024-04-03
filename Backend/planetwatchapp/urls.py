@@ -12,9 +12,6 @@ from rest_framework_simplejwt.views import (
 
 
 router = DefaultRouter()
-router.register(r'issues',views.IssueViewSet,basename='issues')
-router.register(r'projects',views.ProjectViewSet,basename='projects')
-router.register(r'blogs',views.BlogViewSet,basename='blogs')
 router.register(r'complaints',views.ComplaintViewSet,basename='complaints')
 router.register(r'userdetails',views.UserDetailsViewSet,basename='userdetails')
 router.register(r'emergency',views.EmergencyActionView,basename='emergency')
@@ -26,9 +23,6 @@ router.register(r'diet',views.DietEmissionViewSet,basename='emission')
 router.register(r'emissionsetup',views.EmissionSetupViewSet,basename='emission')
 router.register(r'location',views.ResourceLocationView,basename='location')
 
-# router.register(r'readissues', views.IssueReadOnlyViewSet, basename='readissues')
-# router.register(r'issues',views.IssueViewSet,basename='issues')
-# router.register(r'aqiset', views.AQIViewSet,basename='aqiset')
 schema_view = get_schema_view(
     openapi.Info(
         title="PlanetWatch API",
@@ -50,9 +44,7 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('process-aqi/<str:lat>/<str:longi>/', views.process_AQI, name='process-aqi'),
     path('floodpred/', views.warningAlerts, name='floodPrediction'),
-    path('landslidepred/', views.LandslideWarningAlerts, name='landslidePrediction'),
     path('thunderpred/', views.ThunderWarningAlerts, name='thunderPrediction'),
-    path('windpred/', views.StrongwindWarningAlerts, name='windPrediction'),
     path('notifications/', views.get_notifications, name='get_notifications'),
     path('marknotifications/<int:notification_id>/', views.mark_notification_as_read, name='mark_notification_as_read'),
     path('api/locations/', LocationList.as_view(), name='location-list'),
@@ -60,8 +52,6 @@ urlpatterns = [
     path('contact/', views.contactAuthority, name='contact'),
     path('makeseen/<int:comid>/', views.getAuthorityMessage, name='makeseen'),
     path('getChartFlood/', views.getChartDataFlood, name='getChartFlood'),
-    path('getChartWind/', views.getChartDataWind, name='getChartWind'),
-    path('getChartslide/', views.getChartDataLandslide, name='getChartslide'),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$',
             schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger',

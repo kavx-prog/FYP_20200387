@@ -1,11 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Issues
-from .models import Project
-from .models import Blogs,Landslide,Thunder,ThunderImpact,LandslideImpact
-from .models import Blogs, EmissionTransportation, EmissionEnergy, EmissionDiet,EmissionSetup
-from .models import Blogs,StrongWindInstances,Landslide,Thunder,ThunderImpact,LandslideImpact,StrongwindImpactModel
+from .models import Thunder,ThunderImpact
+from .models import EmissionTransportation, EmissionEnergy, EmissionDiet,EmissionSetup
+from .models import Thunder,ThunderImpact
 from .models import Complaints , EmergencyRelief,AuthorityContact
 from .models import Flood , FloodImpact , Guidance, UserDetailsSetup, DisasterNotification
 from .models import Location
@@ -36,20 +34,6 @@ class ComplaintSerializer (serializers.ModelSerializer):
         model = Complaints
         fields = '__all__'
 
-class BlogSerializer (serializers.ModelSerializer):
-    class Meta:
-        model = Blogs
-        fields = '__all__'
-
-class IssueSerializer (serializers.ModelSerializer):
-    class Meta:
-        model = Issues
-        fields = '__all__'
-
-class ProjectSerializer (serializers.ModelSerializer):
-    class Meta:
-        model = Project
-        fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):
     # issues = serializers.PrimaryKeyRelatedField(many=True, queryset=Issues.objects.all())
@@ -81,22 +65,9 @@ class UserDetailsSerializer(serializers.ModelSerializer):
         model = UserDetailsSetup
         fields = '__all__'
 
-# class IssueSerializer (serializers.ModelSerializer):
-#     owner = serializers.ReadOnlyField(source='owner.username')
-
-
-#     class Meta:
-#         model = Issues
-#         fields = '__all__'
-
 class FloodSerializer (serializers.ModelSerializer):
     class Meta:
         model = Flood
-        fields = '__all__'
-
-class StrongwindSerializer (serializers.ModelSerializer):
-    class Meta:
-        model = StrongWindInstances
         fields = '__all__'
 
 class ThunderSerializer (serializers.ModelSerializer):
@@ -104,19 +75,10 @@ class ThunderSerializer (serializers.ModelSerializer):
         model = Thunder
         fields = '__all__'
 
-class LandslideSerializer (serializers.ModelSerializer):
-    class Meta:
-        model = Landslide
-        fields = '__all__'
 
 class FloodImpactSerializer (serializers.ModelSerializer):
     class Meta:
         model = FloodImpact
-        fields = '__all__'
-
-class LandslideImpactSerializer (serializers.ModelSerializer):
-    class Meta:
-        model = LandslideImpact
         fields = '__all__'
 
 class ThunderImpactSerializer (serializers.ModelSerializer):
@@ -124,10 +86,6 @@ class ThunderImpactSerializer (serializers.ModelSerializer):
         model = ThunderImpact
         fields = '__all__'
 
-class StrongwindImpactSerializer (serializers.ModelSerializer):
-    class Meta:
-        model = StrongwindImpactModel
-        fields = '__all__'
 class GuidanceSerializer (serializers.ModelSerializer):
     class Meta : 
         model = Guidance

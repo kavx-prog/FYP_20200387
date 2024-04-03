@@ -31,47 +31,6 @@ class Complaints (models.Model):
     content = models.CharField(max_length=500)
 
 
-class Blogs (models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
-    blogTitle = models.CharField(max_length=200)
-    publishDate = models.DateField()
-    author = models.CharField(max_length=15)
-    content = models.CharField(max_length=1500)
-    category = models.CharField(max_length=255,default='b')
-
-class Issues (models.Model):
-    issueName = models.CharField(max_length=15)
-    user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
-    disasterDate = models.DateField()
-    province = models.CharField(max_length=15)
-    District = models.CharField(max_length=15)
-    affectedArea = models.CharField(max_length=15)
-    issueDescription = models.CharField(max_length=500)
-    expectedSolution = models.CharField(max_length=200)
-
-class Project(models.Model):
-    projectTitle = models.CharField(max_length=255)
-    user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
-    progress = models.DecimalField(default= 0, max_digits=10, decimal_places=4)
-    helddate = models.CharField(max_length=255)
-    district = models.CharField(max_length=255)
-    province = models.CharField(max_length=255)
-    location = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
-    contributors = models.JSONField()
-    tasks = models.JSONField()
-    timeline = models.JSONField(default=dict)
-    
-# class Issues (models.Model):
-#     owner = models.ForeignKey(User, related_name='issues', on_delete=models.CASCADE,null=True)
-#     issueName = models.CharField(max_length=15)
-#     disasterDate = models.DateField(editable=False)
-#     province = models.CharField(max_length=15)
-#     District = models.CharField(max_length=15)
-#     affectedArea = models.CharField(max_length=15)
-#     issueDescription = models.CharField(max_length=500)
-#     expectedSolution = models.CharField(max_length=200)
-
 class Flood (models.Model):
     prediction = models.CharField(max_length=1)
     temp_avg = models.DecimalField(max_digits=3,decimal_places=1)
@@ -85,14 +44,6 @@ class FloodImpact (models.Model):
     impactRange = models.CharField(max_length=1)
     created_at = models.DateTimeField(auto_now_add=True)
 
-class LandslideImpact (models.Model):
-    slideprediction = models.CharField(max_length=1)
-    temp_max = models.DecimalField(max_digits=3,decimal_places=1)
-    temp_min = models.DecimalField(max_digits=3,decimal_places=1)
-    rainSum = models.DecimalField(max_digits=4,decimal_places=1)
-    damaged_houses = models.CharField(max_length=1)
-    created_at = models.DateTimeField(auto_now_add=True)
-
 class ThunderImpact (models.Model):
     thunderprediction = models.CharField(max_length=1)
     temp_max = models.DecimalField(max_digits=3,decimal_places=1)
@@ -101,13 +52,6 @@ class ThunderImpact (models.Model):
     victims = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
-class StrongwindImpactModel (models.Model):
-    windprediction = models.CharField(max_length=1)
-    wind_speed = models.DecimalField(max_digits=4,decimal_places=1)
-    temp_max = models.DecimalField(max_digits=3,decimal_places=1)
-    temp_min = models.DecimalField(max_digits=3,decimal_places=1)
-    damaged_houses = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
 class Guidance(models.Model):
     disaster = models.CharField(max_length=10)
     moment = models.CharField(max_length = 10)
@@ -162,21 +106,6 @@ class Location(models.Model):
 
     def __str__(self):
         return self.locationName
-
-
-class StrongWindInstances (models.Model):
-    prediction = models.CharField(max_length=1)
-    temp_max = models.DecimalField(max_digits=4,decimal_places=1)
-    wind_speed = models.DecimalField(max_digits=3,decimal_places=1)
-    temp_min= models.DecimalField(max_digits=4,decimal_places=1)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-class Landslide (models.Model):
-    prediction = models.CharField(max_length=1)
-    temp_min = models.DecimalField(max_digits=4,decimal_places=1)
-    temp_max = models.DecimalField(max_digits=4,decimal_places=1)
-    rainSUm = models.DecimalField(max_digits=4,decimal_places=1)
-    created_at = models.DateTimeField(auto_now_add=True)
 
 class Thunder (models.Model):
     prediction = models.CharField(max_length=1)

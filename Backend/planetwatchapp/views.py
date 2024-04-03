@@ -1,19 +1,18 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import viewsets,generics
-from .serializers import RegisterSerializer,IssueSerializer
+from .serializers import RegisterSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
-from .models import Issues,AuthorityContact
-from .models import Project,EmergencyRelief
-from .models import Blogs , Guidance
-from .models import Complaints,UserDetailsSetup,Landslide,StrongWindInstances,Thunder,LandslideImpact,ThunderImpact,StrongwindImpactModel,EmissionSetup
-from .serializers import IssueSerializer
-from .serializers import ProjectSerializer,GuidanceSerializer,StrongwindImpactSerializer
-from .serializers import BlogSerializer,UserDetailsSerializer,DisasterNotificationSerializer
-from .serializers import ComplaintSerializer,FloodImpactSerializer,UserDetailsSerializer, EmergencyActionSerializer,ThunderImpactSerializer,LandslideImpactSerializer,LandslideSerializer
+from .models import AuthorityContact
+from .models import EmergencyRelief
+from .models import Guidance
+from .models import Complaints,UserDetailsSetup,Thunder,ThunderImpact,EmissionSetup
+from .serializers import GuidanceSerializer
+from .serializers import UserDetailsSerializer,DisasterNotificationSerializer
+from .serializers import ComplaintSerializer,FloodImpactSerializer,UserDetailsSerializer, EmergencyActionSerializer,ThunderImpactSerializer
 import requests
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken,AccessToken
@@ -23,7 +22,7 @@ import os
 import numpy as np
 from celery import shared_task
 from .models import Flood,FloodImpact,UserDetailsSetup,DisasterNotification, EmergencyRelief, EmissionTransportation, EmissionEnergy, EmissionDiet
-from .serializers import FloodSerializer,AuthorityContactSerializer, TransportationEmissionSerializer, EnergyEmissionSerializer, DietEmissionSerializer,EmissionSetupSerializer
+from .serializers import AuthorityContactSerializer, TransportationEmissionSerializer, EnergyEmissionSerializer, DietEmissionSerializer,EmissionSetupSerializer
 import schedule
 from datetime import datetime, timedelta
 from django.http import JsonResponse
@@ -48,11 +47,7 @@ mlmodels_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'm
 # Load the joblib file from the mlmodels directory
 model = load(os.path.join(mlmodels_path, 'floodPredictionModel.joblib'))
 impactModel = load(os.path.join(mlmodels_path, 'impactAssessment.joblib'))
-slidemodel = load(os.path.join(mlmodels_path,'Landslide.joblib'))
-windmodel = load(os.path.join(mlmodels_path,'Strongwind new.joblib'))
 thundermodel = load(os.path.join(mlmodels_path,'thunderModel.joblib'))
-slideimpactModel = load(os.path.join(mlmodels_path,'Landslide_Damage_Improved_New.joblib'))
-windimpactModel = load(os.path.join(mlmodels_path,'WindDamage (5).joblib'))
 thunderimpactModel = load(os.path.join(mlmodels_path,'ThunderDamageKNN.joblib'))
 
 class EmissionSetupViewSet (viewsets.ModelViewSet):
@@ -82,26 +77,6 @@ class DietEmissionViewSet (viewsets.ModelViewSet):
 class ComplaintViewSet (viewsets.ModelViewSet):
     queryset = Complaints.objects.all()
     serializer_class = ComplaintSerializer
-    # authentication_classes = [JWTAuthentication]
-    # permission_classes= [IsAuthenticated]
-
-class BlogViewSet (viewsets.ModelViewSet):
-    queryset = Blogs.objects.all()
-    serializer_class = BlogSerializer
-    # authentication_classes = [JWTAuthentication]
-    # permission_classes= [IsAuthenticated]
-
-
-class IssueViewSet (viewsets.ModelViewSet):
-    queryset = Issues.objects.all()
-    serializer_class = IssueSerializer
-    # authentication_classes = [JWTAuthentication]
-    # permission_classes= [IsAuthenticated]
-    
-class ProjectViewSet (viewsets.ModelViewSet):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
-    
     # authentication_classes = [JWTAuthentication]
     # permission_classes= [IsAuthenticated]
 
@@ -146,36 +121,6 @@ class LogoutCustomView(APIView):
             return Response({'error': error_message}, status=400)
 
         return Response({'message': 'Logout successful'}, status=200)
-   
-
-    # def post(self, request):
-    #     try:
-    #         refresh_token = request.META.get('HTTP_AUTHORIZATION').split('Bearer ')[1]
-    #         token = RefreshToken(refresh_token)
-    #         token.blacklist()
-    #     except Exception as e:
-    #         return Response({'error': 'Invalid token'}, status=400)
-
-    #     return Response({'message': 'Logout successful'}, status=200)
-   
-
-    # def post(self, request):
-    #     refresh_token = None
-    #     try:
-    #         authorization_header = request.META.get('HTTP_AUTHORIZATION')
-    #         if not authorization_header or not authorization_header.startswith('Bearer '):
-    #             raise ParseError('Invalid or missing Authorization header')
-            
-    #         refresh_token = authorization_header.split('Bearer ')[1]
-    #         token = RefreshToken(refresh_token)
-    #         print(refresh_token)
-    #         token.blacklist()
-    #         return Response({'message': 'Logout successful'}, status=200)
-    #     except Exception as e:
-    #         # Capture the actual error message and include it in the response
-    #         print(refresh_token)
-    #         error_message = str(e) if str(e) else 'An error occurred'
-    #         return Response({'error': error_message}, status=400)
 
 class UserDetailsViewSet (viewsets.ModelViewSet):
     queryset = UserDetailsSetup.objects.all()
@@ -186,32 +131,6 @@ class UserDetailsViewSet (viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-# class IssueViewSet (viewsets.ModelViewSet):
-#     queryset = Issues.objects.all()
-#     authentication_classes = [JWTAuthentication]
-#     permission_classes= [IsAuthenticated]
-#     serializer_class = IssueSerializer
-
-#     def get_queryset(self):
-#         owner = self.request.user
-#         return Issues.objects.filter(owner=owner)
-    
-   
-
-#     def perform_create(self, serializer):
-#         serializer.save(owner=self.request.user)
-
-#     def perform_update(self, serializer):
-#         serializer.save(owner=self.request.user)
-
-# class IssueReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
-#     """
-#     A simple ViewSet for viewing accounts.
-#     """
-#     queryset = Issues.objects.all()
-#     serializer_class = IssueSerializer   
-#     authentication_classes = [JWTAuthentication]
-#     permission_classes= [IsAuthenticated]
 
 # @api_view(['GET'])
 def average_temperature():
@@ -311,38 +230,6 @@ def floodForecast():
     prediction_instance.save()
     return prediction_instance
 
-def LandslideForecast():
-    temp_min = temp_min_avg()
-    temp_max = temp_max_avg()
-    rain_sum = rainfallSum()
-
-    prediction = slidemodel.predict([[rain_sum,temp_max,temp_min]])
-    
-    prediction_instance = Landslide(
-            temp_min= temp_min,
-            temp_max=temp_max,
-            rainSUm=rain_sum,
-            prediction=prediction
-    )
-    prediction_instance.save()
-    return prediction_instance
-
-def StrongWindForecast():
-    windspeed = windSpeedSum()
-    temp_max = temp_max_avg()
-    temp_min = temp_min_avg()
-    prediction = windmodel.predict([[windspeed,temp_max,temp_min]])
-    
-    prediction_instance = StrongWindInstances(
-            wind_speed= windspeed,
-            temp_max = temp_max,
-            temp_min = temp_min,
-            prediction = prediction
-    )
-    prediction_instance.save()
-    return prediction_instance
-
-
 
 def ThunderForecast():
     rain_sum = rainfallSum()
@@ -363,7 +250,7 @@ def ThunderForecast():
 
 
 ####################### Models are scheduled to run at the begining of every week (Sunday 12.00 a.m) #########################
-floodForecast()
+# floodForecast()
 # schedule.every().sunday.at('00.00').do(floodForecast)
 # schedule.every(1).minutes.do(floodForecast)
 # while True:
@@ -455,172 +342,15 @@ def floodImpact():
 
             # Print the response for debugging (optional)
             print(f"SMS sent to {phone_number}. Response: {response.text}")
-# 
 
-def landslideImpact():
-    pred = LandslideForecast()
-    if pred.prediction == [0]:
-        slideimpact = slideimpactModel.predict([[pred.rainSUm,pred.temp_max,pred.temp_min]])
-        slideimpact = np.array(slideimpact)
+####################### Models are scheduled to run at the begining of every week (Sunday 12.00 a.m) #########################
+# ThunderForecast()
+# schedule.every().sunday.at('00.00').do(ThunderForecast)
+# schedule.every(1).minutes.do(ThunderForecast)
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)
 
-# Ceil the values in the array  
-        slideimpact = np.ceil(slideimpact)
-        slideimpact =str(int(slideimpact))
-        impact_instance = LandslideImpact(
-            slideprediction = pred.prediction,
-            temp_max = pred.temp_max,
-            temp_min = pred.temp_min,
-            rainSum = pred.rainSUm,
-            damaged_houses = slideimpact
-        )
-        impact_instance.save()
-        users_in_ratnapura = UserDetailsSetup.objects.filter(district="Ratnapura")  # Adjust the field name accordingly
-
-        # Notify.lk API endpoint and credentials
-        notifylk_url = 'https://app.notify.lk/api/v1/send'
-        # api_key = 'ZVJvh0Dr9jvo3cbdMHBr'  # Replace with your actual API key
-        api_key = 'ROQP9uElHwXsxQWVR0kC'
-        user_id = '25600'
-        sender_id="NotifyDEMO"
-        
-        
-
-
-        # Iterate through users and send SMS
-        for user in users_in_ratnapura:
-            
-            # message = "Flood impact prediction indicates low risk."
-            # # notification = WebAppNotification.objects.create(owner=user.owner_id,message=message)
-            # # NotificationSerializer(notification)
-
-            # notification = WebAppNotification(
-            #     owner = user.owner_id,
-            #     message = message
-            # )
-
-            # notification.save()
-            # # Serialize the notification and return the response
-            
-            messagenoti = "Emergency Disaster Alert"
-            notification = DisasterNotification(
-                message = messagenoti,
-                owner = user.owner_id, 
-            )
-
-            notification.save()
-    
-            today = datetime.now().date()
-            sixth_day = today + timedelta(days=6)
-            # evacuation = EmergencyRelief.objects.filter(flood=True)
-            # evacuation_list = "\n - ".join(evacuation)
-            # evacutaionRoutes = EmergencyRelief.objects.filter(flood=True)
-            # evacuation_list = "\n - ".join(evacutaionRoutes)
-            # print(evacutaionRoutes)
-            message = (f"Landslide Impact Alert: Possibility of landslide in Ratnapura District ({today} to {sixth_day})."
-            f"\nPotential damaging houses may  {slideimpact}. "
-            f"\nTo ensure safety from the Earthquake, individuals can consider visiting the following locations:"
-            f"\n -Chiththa Wiweka Aranya Senasanaya"
-            f"\nFollow local authorities' advice. Stay prepared and vigilant.")
-            
-            
-            phone_number = user.telephoneNumber  # Adjust the field name accordingly
-            
-            # Send SMS using the Notify.lk API
-            payload = {
-                'user_id':user_id,
-                'api_key': api_key,
-                'sender_id':sender_id,
-                'to': phone_number,
-                'message': message
-            }
-            response = requests.post(notifylk_url, data=payload)
-
-            # Print the response for debugging (optional)
-            print(f"SMS sent to {phone_number}. Response: {response.text}")
-
-
-def strongWindImpact():
-    pred = StrongWindForecast()
-    if pred.prediction == [1]:
-        windimpact = windimpactModel.predict([[pred.wind_speed,pred.temp_max,pred.temp_min]])
-        windimpact = np.array(windimpact)
-
-# Ceil the values in the array  
-        windimpact = np.ceil(windimpact)
-        windimpact =str(int(windimpact))
-        impact_instance = StrongwindImpactModel(
-            windprediction = pred.prediction,
-            temp_max = pred.temp_max,
-            temp_min = pred.temp_min,
-            wind_speed = pred.wind_speed,
-            damaged_houses = windimpact
-        )
-        impact_instance.save()
-        users_in_ratnapura = UserDetailsSetup.objects.filter(district="Ratnapura")  # Adjust the field name accordingly
-
-        # Notify.lk API endpoint and credentials
-        notifylk_url = 'https://app.notify.lk/api/v1/send'
-        # api_key = 'ZVJvh0Dr9jvo3cbdMHBr'  # Replace with your actual API key
-        api_key = 'ROQP9uElHwXsxQWVR0kC'
-        user_id = '25600'
-        sender_id="NotifyDEMO"
-        
-        
-
-
-        # Iterate through users and send SMS
-        for user in users_in_ratnapura:
-            
-            # message = "Flood impact prediction indicates low risk."
-            # # notification = WebAppNotification.objects.create(owner=user.owner_id,message=message)
-            # # NotificationSerializer(notification)
-
-            # notification = WebAppNotification(
-            #     owner = user.owner_id,
-            #     message = message
-            # )
-
-            # notification.save()
-            # # Serialize the notification and return the response
-            
-            messagenoti = "Emergency Disaster Alert"
-            notification = DisasterNotification(
-                message = messagenoti,
-                owner = user.owner_id, 
-            )
-
-            notification.save()
-    
-            today = datetime.now().date()
-            sixth_day = today + timedelta(days=6)
-            # evacuation = EmergencyRelief.objects.filter(flood=True)
-            # evacuation_list = "\n - ".join(evacuation)
-            # evacutaionRoutes = EmergencyRelief.objects.filter(flood=True)
-            # evacuation_list = "\n - ".join(evacutaionRoutes)
-            # print(evacutaionRoutes)
-            message = (f"Strongwind Impact Alert: Possibility of Strongind in Ratnapura District ({today} to {sixth_day})."
-            f"\nPotential damaging houses may  {windimpact}. "
-            f"\nTo ensure safety from the Earthquake, individuals can consider visiting the following locations:"
-            f"\n -Chiththa Wiweka Aranya Senasanaya"
-            f"\nFollow local authorities' advice. Stay prepared and vigilant.")
-            
-            
-            phone_number = user.telephoneNumber  # Adjust the field name accordingly
-            
-            # Send SMS using the Notify.lk API
-            payload = {
-                'user_id':user_id,
-                'api_key': api_key,
-                'sender_id':sender_id,
-                'to': phone_number,
-                'message': message
-            }
-            response = requests.post(notifylk_url, data=payload)
-
-            # Print the response for debugging (optional)
-            print(f"SMS sent to {phone_number}. Response: {response.text}")
-
-ThunderForecast()
 
 def thunderImpact():
     pred = ThunderForecast()
@@ -702,10 +432,10 @@ def thunderImpact():
             print(f"SMS sent to {phone_number}. Response: {response.text}")
 
 
-floodImpact()
-# landslideImpact()
+# Runs the Impact and sends SMS
+# floodImpact()
 # thunderImpact()
-# strongWindImpact()
+
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def get_notifications(request):
@@ -742,38 +472,7 @@ def warningAlerts(request):
             return Response(response_data)
     except FloodImpact.DoesNotExist:
         return Response({"message": "No records found"}, status=404)
-    
-@api_view(['GET'])
-def LandslideWarningAlerts(request):
-    # warning = floodImpact()
-    # return Response(warning.json())
-    try:
-        last_record = LandslideImpact.objects.latest('id') 
-         # Assuming 'id' is the primary key field
-        if last_record.slideprediction == '[0]':
-            serializer = LandslideImpactSerializer(last_record)
-            return Response(serializer.data)
-        else:
-            response_data = 0
-            return Response(response_data)
-    except LandslideImpact.DoesNotExist:
-        return Response({"message": "No records found"}, status=404)
-    
-@api_view(['GET'])
-def StrongwindWarningAlerts(request):
-    # warning = floodImpact()
-    # return Response(warning.json())
-    try:
-        last_record = StrongwindImpactModel.objects.latest('id') 
-         # Assuming 'id' is the primary key field
-        if last_record.windprediction == '[1]':
-            serializer =StrongwindImpactSerializer(last_record)
-            return Response(serializer.data)
-        else:
-            response_data = 0
-            return Response(response_data)
-    except StrongwindImpactModel.DoesNotExist:
-        return Response({"message": "No records found"}, status=404)
+
     
 @api_view(['GET'])
 def ThunderWarningAlerts(request):
@@ -811,46 +510,6 @@ def getChartDataFlood(request):
     except Flood.DoesNotExist:
         return Response({"message": "No records found"}, status=404)
     
-@api_view(['GET'])
-def getChartDataWind(request):
-    # warning = floodImpact()
-    # return Response(warning.json())
-    try:
-        last_record = StrongWindInstances.objects.latest('id') 
-         # Assuming 'id' is the primary key field
-        if last_record.prediction == '[1]':
-            floodDate = last_record.created_at.date()
-            six =  floodDate + timedelta(days=6)
-            url = f'https://api.open-meteo.com/v1/forecast?latitude=6.6858&longitude=80.4036&daily=windspeed_10m_max&timezone=auto&start_date={floodDate}&end_date={six}'
-            response = requests.get(url)
-            data = response.json()
-            return Response(data)
-        else:
-            response_data = 0
-            return Response(response_data)
-    except StrongWindInstances.DoesNotExist:
-        return Response({"message": "No records found"}, status=404)
-
-@api_view(['GET'])
-def getChartDataLandslide(request):
-    # warning = floodImpact()
-    # return Response(warning.json())
-    try:
-        last_record = Landslide.objects.latest('id') 
-         # Assuming 'id' is the primary key field
-        if last_record.prediction == '[0]':
-            floodDate = last_record.created_at.date()
-            six =  floodDate + timedelta(days=6)
-            url = f'https://api.open-meteo.com/v1/forecast?latitude=6.6858&longitude=80.4036&daily=et0_fao_evapotranspiration&timezone=auto&start_date={floodDate}&end_date={six}'
-            response = requests.get(url)
-            data = response.json()
-            return Response(data)
-        else:
-            response_data = 0
-            return Response(response_data)
-    except Landslide.DoesNotExist:
-        return Response({"message": "No records found"}, status=404)
-
 class EmergencyActionView(viewsets.ModelViewSet):
     queryset = EmergencyRelief.objects.all()
     serializer_class = EmergencyActionSerializer
