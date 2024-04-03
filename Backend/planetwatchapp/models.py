@@ -30,7 +30,6 @@ class Complaints (models.Model):
     area = models.CharField(max_length=15)
     content = models.CharField(max_length=500)
 
-
 class Flood (models.Model):
     prediction = models.CharField(max_length=1)
     temp_avg = models.DecimalField(max_digits=3,decimal_places=1)
@@ -74,8 +73,6 @@ class DisasterNotification(models.Model):
         self.is_read = True
         self.save()
 
-
-
 class EmergencyRelief (models.Model):
     location = models.CharField(max_length=100)
     longitude =models.FloatField()
@@ -83,7 +80,6 @@ class EmergencyRelief (models.Model):
     flood = models.BooleanField()
     landslide = models.BooleanField()
     strongwind = models.BooleanField()
-
 
 class AuthorityContact(models.Model):
    
