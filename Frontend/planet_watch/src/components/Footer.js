@@ -13,9 +13,9 @@ function Footer() {
               <img src={require("../assets/images/logo.png")} height={200} />
             </a>
           </div>
-          <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+          <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
             <center>
-              <h5 class="text-uppercase">{t("services")}</h5>
+              <h5 class="text-uppercase" style={{ paddingTop: "2rem"}}>{t("services")}</h5>
 
               <ul class="list-unstyled mb-0">
                 <li>
@@ -29,17 +29,20 @@ function Footer() {
                     {t("alert")}
                   </Link>
                 </li>
+
                 <li>
                   <Link
-                    to="/locshow"
+                    to="/carbonDash"
                     class="text-white"
                     style={{
                       textDecoration: "none",
                     }}
                   >
-                    {t("free_food_resources")}
+                    {t("carbon_footprint_calculator")}
                   </Link>
                 </li>
+
+                
                 <li>
                   <Link
                     to="/floodtips"
@@ -51,27 +54,18 @@ function Footer() {
                     {t("tips_and_tricks")}
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to="/authority"
-                    class="text-white"
-                    style={{
-                      textDecoration: "none",
-                    }}
-                  >
-                    {t("Emergency Notification Management")}
-                  </Link>
-                </li>
+
+              
               </ul>
             </center>
           </div>
 
           <div
-            class="col-lg-3 col-md-6 mb-4 mb-md-0"
+            class="col-lg-4 col-md-6 mb-4 mb-md-0"
             style={{ paddingLeft: "10%" }}
           >
             <center>
-              <h5 class="text-uppercase">{t("tools")}</h5>
+              <h5 class="text-uppercase" style={{ paddingTop: "2rem"}}>{t("tools")}</h5>
 
               <ul class="list-unstyled mb-0">
                 <li>
@@ -85,73 +79,19 @@ function Footer() {
                     {t("air_quality_tracker")}
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to="/greenshowcase"
-                    class="text-white"
-                    style={{
-                      textDecoration: "none",
-                    }}
-                  >
-                    {t("green_showcase")}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/carbonDash"
-                    class="text-white"
-                    style={{
-                      textDecoration: "none",
-                    }}
-                  >
-                    {t("carbon_footprint_calculator")}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/emergencykit"
-                    class="text-white"
-                    style={{
-                      textDecoration: "none",
-                    }}
-                  >
-                    {t("emergency kit")}
-                  </Link>
-                </li>
-              </ul>
-            </center>
-          </div>
 
-          <div
-            class="col-lg-3 col-md-6 mb-4 mb-md-0"
-            style={{ paddingLeft: "10%" }}
-          >
-            <center>
-              <h5 class="text-uppercase">{t("social")}</h5>
+                <li>
+                  <Link
+                    to="/locshow"
+                    class="text-white"
+                    style={{
+                      textDecoration: "none",
+                    }}
+                  >
+                    {t("free_food_resources")}
+                  </Link>
+                </li>
 
-              <ul class="list-unstyled mb-0">
-                <li>
-                  <Link
-                    to="/projectDash"
-                    class="text-white"
-                    style={{
-                      textDecoration: "none",
-                    }}
-                  >
-                    {t("projects")}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/blogs"
-                    class="text-white"
-                    style={{
-                      textDecoration: "none",
-                    }}
-                  >
-                    {t("blogs_articles")}
-                  </Link>
-                </li>
                 <li>
                   <Link
                     to="/addcomplaints"
@@ -163,31 +103,34 @@ function Footer() {
                     {t("carbon_complaints")}
                   </Link>
                 </li>
+
                 <li>
                   <Link
-                    to="/allissues"
+                    to="/foods"
                     class="text-white"
                     style={{
                       textDecoration: "none",
                     }}
                   >
-                    {t("issues")}
+                    {t("carbon_reduction_g")}
                   </Link>
                 </li>
-                <li>
+                
+                {/* <li>
                   <Link
-                    to="/news"
+                    to="/emergencykit"
                     class="text-white"
                     style={{
                       textDecoration: "none",
                     }}
                   >
-                    {t("climate_news")}
+                    {t("emergency kit")}
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </center>
           </div>
+
         </div>
         <hr></hr>
       </div>

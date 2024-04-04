@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Col, Container, Row, Modal } from "react-bootstrap";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -8,7 +9,7 @@ import Footer from '../components/Footer';
 function CreateComplaints() {
   
   const [showPopup, setShowPopup] = useState(false);
-
+  const { t } = useTranslation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -162,22 +163,16 @@ function CreateComplaints() {
           </form>
         </div>
         <Modal show={showPopup} onHide={() => setShowPopup(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Success</Modal.Title>
+        <Modal.Header closeButton>
+            <Modal.Title>{t("success")}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <Row>
-              <Col>
-                <p>Your complaint has been filed successfully!</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Link to="/blogs">
-                  <button className="btn btn-success">OK</button>
-                </Link>
-              </Col>
-            </Row>
+          <Modal.Body className="text-center">
+            <div className="d-flex flex-column align-items-center">
+              <p>Your complaint has been filed successfully!</p>
+              <Link to="/dashboard">
+                <button className="btn btn-success">{t("ok")}</button>
+              </Link>
+            </div>
           </Modal.Body>
         </Modal>
       </Container>
