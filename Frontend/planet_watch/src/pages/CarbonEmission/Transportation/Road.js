@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import axiosInstance from "../../../axios";
 
 const Road = () => {
   const [journeys, setJourneys] = useState([]);
@@ -17,7 +18,20 @@ const Road = () => {
   const [pMethod, setPMethod] = useState("");
   const [pType, setPType] = useState("");
   const [totalEmission, setTotalEmission] = useState("0");
+  const [personalvehicle, setpersonalvehicle] = useState(12);
   const [objectID, setObjectID] = useState(null);
+
+  const token = localStorage.getItem("access_token");
+  const decodedToken = jwtDecode(token);
+  const userfromtoken = decodedToken.user_id;
+
+  function getLastObjectFromArray(jsonArray) {
+    if (jsonArray && jsonArray.length > 0) {
+      return jsonArray[jsonArray.length - 1];
+    } else {
+      return null;
+    }
+  }
 
   useEffect(() => {
     // Disable backward navigation
@@ -36,6 +50,30 @@ const Road = () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/emissionsetup/`
+        );
+        const existingRecord = response.data.filter(
+          (record) => record.user === userfromtoken
+        );
+
+        if (existingRecord && existingRecord.length > 0) {
+          const lastObject = getLastObjectFromArray(existingRecord);
+          setpersonalvehicle(lastObject.veh_emi);
+        } else {
+          // setDataExist(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [userfromtoken]);
 
   const navigate = useNavigate();
 
@@ -59,8 +97,8 @@ const Road = () => {
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.user_id;
     return new Promise((resolve, reject) => {
-      axios
-        .post("http://localhost:8000/transportation/", {
+      axiosInstance
+        .post("transportation/", {
           username: userId,
           automobile_emission: parseFloat(totalEmission).toFixed(2),
         })
@@ -88,7 +126,7 @@ const Road = () => {
       CO2PerLiter = 2.7 / parseInt(passengers);
     } else if (parseInt(method) === 2) {
       if (parseInt(hVehicle) === 1) {
-        fuelConsumptionKmpl = 12;
+        fuelConsumptionKmpl = personalvehicle;
         CO2PerLiter = 2.3;
       } else {
         if (parseInt(pMethod) === 1) {
@@ -224,7 +262,7 @@ const Road = () => {
         CO2PerLiter = 2.7 / journey.passengers;
       } else if (journey.method === 2) {
         if (journey.hVehicle === 1) {
-          fuelConsumptionKmpl = 12;
+          fuelConsumptionKmpl = personalvehicle;
           CO2PerLiter = 2.3;
         } else {
           if (journey.pMethod === 1) {
@@ -531,10 +569,10 @@ const Road = () => {
           </Col>
         </Row>
         <Row className="d-flex justify-content-center mb-3">
-          <Col>
-            <Button variant="success" as={Link} to="/main">
-              &lt;&lt; Go Back To Home
-            </Button>
+          <Col className="d-flex justify-content-start">
+            <Link to="/carbonDash">
+              <Button variant="success">&lt;&lt; Go Back To Home</Button>
+            </Link>
           </Col>
           <Col className="d-flex justify-content-end">
             <Button variant="success" onClick={handleNavigate}>

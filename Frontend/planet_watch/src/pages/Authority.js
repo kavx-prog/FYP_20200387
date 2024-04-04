@@ -38,7 +38,7 @@ function Authority() {
           <h1 style={{ fontFamily: "Montserrat", textTransform: "uppercase" }}>
             Emergency Notification Management
             <img
-              src={require("../assets/images/call119.png")}
+              src={require("../assets/images/call119.jpg")}
               height={"80px"}
               style={{ float: "right" }}
             ></img>

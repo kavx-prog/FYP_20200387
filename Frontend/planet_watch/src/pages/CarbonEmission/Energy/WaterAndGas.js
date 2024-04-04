@@ -3,8 +3,10 @@ import { Container, Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import jwtDecode from "jwt-decode";
+import axiosInstance from "../../../axios";
 
 function WaterAndGas() {
   const { objectID } = useParams();
@@ -19,6 +21,43 @@ function WaterAndGas() {
   const [electricity_emission, setelectricity_emission] = useState(true);
   const [waterandgas_emission, setwaterandgas_emission] = useState(true);
 
+  const token = localStorage.getItem("access_token");
+  const decodedToken = jwtDecode(token);
+  const userfromtoken = decodedToken.user_id;
+
+  function getLastObjectFromArray(jsonArray) {
+    if (jsonArray && jsonArray.length > 0) {
+      return jsonArray[jsonArray.length - 1];
+    } else {
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/emissionsetup/`
+        );
+        const existingRecord = response.data.filter(
+          (record) => record.user === userfromtoken
+        );
+
+        if (existingRecord && existingRecord.length > 0) {
+          const lastObject = getLastObjectFromArray(existingRecord);
+          setNumPeople(parseInt(lastObject.people_count));
+          setgasDuration(parseInt(lastObject.gas_duration));
+        } else {
+          // setDataExist(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [userfromtoken]);
+
   useEffect(() => {
     // Disable backward navigation
     window.history.forward();
@@ -26,14 +65,14 @@ function WaterAndGas() {
     // Listen for the beforeunload event to prevent leaving the page
     const handleBeforeUnload = (event) => {
       event.preventDefault();
-      event.returnValue = '';
+      event.returnValue = "";
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     // Clean up the event listener when the component unmounts
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [objectID]);
 
@@ -51,15 +90,14 @@ function WaterAndGas() {
   useEffect(() => {
     // window.history.forward();
 
-    axios
-      .get(`http://localhost:8000/energy/${objectID}/`)
+    axiosInstance
+      .get(`/energy/${objectID}/`)
       .then((response) => {
         setData(response.data);
 
         setusername(response.data.username);
         setelectricity_emission(response.data.electricity_emission);
         setwaterandgas_emission(response.data.waterandgas_emission);
-
 
         setLoading(false);
       })
@@ -71,12 +109,13 @@ function WaterAndGas() {
 
   const updateData = (totalEmissionnew) => {
     const updatedData = {
-      username:username,
+      username: username,
       electricity_emission: electricity_emission,
       waterandgas_emission: parseFloat(totalEmissionnew).toFixed(2),
     };
 
-    axios.put(`http://localhost:8000/energy/${objectID}/`, updatedData)
+    axiosInstance
+      .put(`/energy/${objectID}/`, updatedData)
       .then((response) => {
         console.log("Data updated successfully:", response.data);
       })

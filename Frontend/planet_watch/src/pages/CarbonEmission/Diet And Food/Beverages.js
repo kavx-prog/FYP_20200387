@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import jwtDecode from "jwt-decode";
+import axiosInstance from "../../../axios";
 
 function Beverages() {
   const { objectID } = useParams();
@@ -18,6 +20,40 @@ function Beverages() {
   const [username, setusername] = useState(true);
   const [food_emission, setfood_emission] = useState(true);
   const [beverages_emission, setbeverages_emission] = useState(true);
+
+  const token = localStorage.getItem("access_token");
+  const decodedToken = jwtDecode(token);
+  const userfromtoken = decodedToken.user_id;
+
+  function getLastObjectFromArray(jsonArray) {
+    if (jsonArray && jsonArray.length > 0) {
+      return jsonArray[jsonArray.length - 1];
+    } else {
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/emissionsetup/`
+        );
+        const existingRecord = response.data.filter(
+          (record) => record.user === userfromtoken
+        );
+
+        if (existingRecord && existingRecord.length > 0) {
+          const lastObject = getLastObjectFromArray(existingRecord);
+          setNumPeople(parseInt(lastObject.people_count));
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [userfromtoken]);
 
   useEffect(() => {
     // Disable backward navigation
@@ -51,8 +87,8 @@ function Beverages() {
   useEffect(() => {
     // window.history.forward();
 
-    axios
-      .get(`http://localhost:8000/diet/${objectID}/`)
+    axiosInstance
+      .get(`/diet/${objectID}/`)
       .then((response) => {
         setData(response.data);
 
@@ -75,8 +111,8 @@ function Beverages() {
       beverages_emission: parseFloat(totalEmissionnew).toFixed(2),
     };
 
-    axios
-      .put(`http://localhost:8000/diet/${objectID}/`, updatedData)
+    axiosInstance
+      .put(`/diet/${objectID}/`, updatedData)
       .then((response) => {
         console.log("Data updated successfully:", response.data);
       })

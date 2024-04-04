@@ -193,7 +193,7 @@ function Footer() {
       </div>
 
       <div class="text-center p-1" style={{ backgroundcolor: "black" }}>
-        © 2023 PlanetWatch
+        © 2024 PlanetWatch
       </div>
     </footer>
   );

@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../../axios";
 
 const Plane = () => {
   const { objectID } = useParams();
@@ -36,8 +37,8 @@ const Plane = () => {
 
   useEffect(() => {
     window.history.forward();
-    axios
-      .get(`http://localhost:8000/transportation/${objectID}/`)
+    axiosInstance
+      .get(`/transportation/${objectID}/`)
       .then((response) => {
         setData(response.data);
 
@@ -72,8 +73,8 @@ const Plane = () => {
       aviation: parseFloat(totalRailEmissionnew).toFixed(2),
     };
 
-    axios
-      .put(`http://localhost:8000/transportation/${objectID}/`, updatedData)
+    axiosInstance
+      .put(`/transportation/${objectID}/`, updatedData)
       .then((response) => {
         console.log("Data updated successfully:", response.data);
       })

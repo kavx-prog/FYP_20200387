@@ -10,6 +10,7 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { useTranslation } from "react-i18next";
 import jwtDecode from "jwt-decode";
+import axiosInstance from "../axios";
 import {
   LineChart,
   Line,
@@ -56,8 +57,8 @@ const CarbonDashBoard = () => {
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/transportation/")
+    axiosInstance
+      .get("/transportation/")
       .then((res) => {
         // const ResData = res.data;
         const ResData = res.data.filter((item) => item.username === userId);
@@ -138,8 +139,8 @@ const CarbonDashBoard = () => {
   }, []);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/energy/")
+    axiosInstance
+      .get("/energy/")
       .then((res) => {
         // const ResData = res.data;
         const ResData = res.data.filter((item) => item.username === userId);
@@ -183,8 +184,8 @@ const CarbonDashBoard = () => {
   }, []);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/diet/")
+    axiosInstance
+      .get("/diet/")
       .then((res) => {
         // const ResData = res.data;
         const ResData = res.data.filter((item) => item.username === userId);
@@ -864,7 +865,7 @@ const CarbonDashBoard = () => {
                   onClick={() => setMainShow("3")}
                   style={{ width: "50vh" }}
                 >
-                    {t("configure_emission")}
+                  {t("configure_emission")}
                 </Button>
               </Link>
             </Col>

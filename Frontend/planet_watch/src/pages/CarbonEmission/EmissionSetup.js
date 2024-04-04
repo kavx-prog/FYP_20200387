@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import axiosInstance from "../../axios";
 
 function EmissionSetup() {
   const [showPopup, setShowPopup] = useState(false);
@@ -40,25 +41,27 @@ function EmissionSetup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(dataExist){
-      // console.log(objectID);
+    if (dataExist) {
       updateUserData(objectID);
-    }else{
+    } else {
       console.log("data dosen't exist");
+      createNewUserRecord();
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/emissionsetup/`);
+        const response = await axiosInstance.get(
+          `/emissionsetup/`
+        );
         const existingRecord = response.data.filter(
           (record) => record.user === userfromtoken
         );
-  
+
         if (existingRecord && existingRecord.length > 0) {
           const lastObject = getLastObjectFromArray(existingRecord);
-  
+
           setObjectID(lastObject.id);
           setNumPeople(lastObject.people_count);
           setBulbType(lastObject.bulb_type);
@@ -69,20 +72,18 @@ function EmissionSetup() {
           setFridgeType(lastObject.refrigerator_power);
           setFuelPersonal(lastObject.veh_emi);
           setGasDuration(lastObject.gas_duration);
-  
+
           setDataExist(true);
         } else {
           setDataExist(false);
         }
       } catch (error) {
         console.error(error);
-        // Handle errors, e.g., show an error message to the user
       }
     };
-  
+
     fetchData();
   }, [userfromtoken]);
-  
 
   const updateUserData = (id) => {
     const updatedData = {
@@ -98,8 +99,8 @@ function EmissionSetup() {
       user: userfromtoken,
     };
     console.log(updatedData);
-    axios
-      .put(`http://localhost:8000/emissionsetup/${id}/`, updatedData)
+    axiosInstance
+      .put(`/emissionsetup/${id}/`, updatedData)
       .then((response) => {
         setShowPopup(true);
         console.log("Data updated successfully:", response.data);
@@ -109,22 +110,30 @@ function EmissionSetup() {
       });
   };
 
-  // const createNewUserRecord = (data) => {
-  //   axios
-  //     .post("http://localhost:8000/emissionsetup/", formData)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       // Handle success response and perform any additional actions
+  const createNewUserRecord = () => {
+    const newData = {
+      veh_emi: parseFloat(fuelPersonal).toFixed(4),
+      people_count: parseFloat(numPeople).toFixed(4),
+      bulb_type: bulbType,
+      bulb_count: parseFloat(bulbCount).toFixed(4),
+      ac_btu: parseFloat(acBTU).toFixed(4),
+      ac_count: parseFloat(acCount).toFixed(4),
+      ac_type: acType,
+      refrigerator_power: parseFloat(fridgeType).toFixed(4),
+      gas_duration: parseFloat(gasDuration).toFixed(4),
+      user: userfromtoken,
+    };
 
-  //       // Redirect to another page
-  //       setShowPopup(true);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //       // Handle error response
-  //     });
-  //   console.log("Creating a new user record:", data);
-  // };
+    axiosInstance
+      .post("/emissionsetup/", newData)
+      .then((response) => {
+        console.log(response.data);
+        setShowPopup(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <div>
@@ -139,21 +148,16 @@ function EmissionSetup() {
           </div>
 
           <div className="text-center mb-4">
-            <Container
-            // style={{ width: "50vw" }}
-            // className="border border-success border-2"
-            >
-              {/* <div className="text-center mt-3 mb-4">
-                <h3 class="display-6">Electricity</h3>
-              </div> */}
+            <Container>
               <Row className="d-flex justify-content-center mb-3 mt-3">
                 <Col xs={7} md={6} className="d-flex justify-content-end">
                   <label>Number of People : </label>
                 </Col>
                 <Col xs={7} md={6} className="d-flex justify-content-start">
                   <input
+                    className="text-center"
                     type="number"
-                    value={numPeople}
+                    value={parseInt(numPeople)}
                     min={1}
                     onChange={(e) => {
                       const newValue = parseInt(e.target.value);
@@ -207,8 +211,9 @@ function EmissionSetup() {
                 </Col>
                 <Col xs={10} md={6} className="d-flex justify-content-start">
                   <input
+                    className="text-center"
                     type="number"
-                    value={bulbCount}
+                    value={parseInt(bulbCount)}
                     min={0}
                     onChange={(e) => {
                       const newValue = parseInt(e.target.value);
@@ -227,31 +232,51 @@ function EmissionSetup() {
                       id={"4"}
                       type="radio"
                       variant="outline-success"
-                      value="800"
-                      checked={parseInt(acBTU) === 800}
+                      value="5000"
+                      checked={parseInt(acBTU) === 5000}
                       onChange={(e) => setBTU(e.target.value)}
                     >
-                      800
+                      5,000
                     </ToggleButton>
                     <ToggleButton
                       id={"5"}
                       type="radio"
                       variant="outline-success"
-                      value="1200"
-                      checked={parseInt(acBTU) === 1200}
+                      value="10000"
+                      checked={parseInt(acBTU) === 10000}
                       onChange={(e) => setBTU(e.target.value)}
                     >
-                      1200
+                      10,000
                     </ToggleButton>
                     <ToggleButton
                       id={"6"}
                       type="radio"
                       variant="outline-success"
-                      value="1500"
-                      checked={parseInt(acBTU) === 1500}
+                      value="12000"
+                      checked={parseInt(acBTU) === 12000}
                       onChange={(e) => setBTU(e.target.value)}
                     >
-                      1500
+                      12,000
+                    </ToggleButton>
+                    <ToggleButton
+                      id={"7"}
+                      type="radio"
+                      variant="outline-success"
+                      value="18000"
+                      checked={parseInt(acBTU) === 18000}
+                      onChange={(e) => setBTU(e.target.value)}
+                    >
+                      18,000
+                    </ToggleButton>
+                    <ToggleButton
+                      id={"8"}
+                      type="radio"
+                      variant="outline-success"
+                      value="24000"
+                      checked={parseInt(acBTU) === 24000}
+                      onChange={(e) => setBTU(e.target.value)}
+                    >
+                      24,000
                     </ToggleButton>
                   </ButtonGroup>
                 </Col>
@@ -262,8 +287,9 @@ function EmissionSetup() {
                 </Col>
                 <Col xs={10} md={6} className="d-flex justify-content-start">
                   <input
+                    className="text-center"
                     type="number"
-                    value={acCount}
+                    value={parseInt(acCount)}
                     min={0}
                     onChange={(e) => {
                       const newValue = parseInt(e.target.value);
@@ -279,7 +305,7 @@ function EmissionSetup() {
                 <Col xs={7} md={6} className="d-flex justify-content-start">
                   <ButtonGroup>
                     <ToggleButton
-                      id={"7"}
+                      id={"9"}
                       type="radio"
                       variant="outline-success"
                       value="250"
@@ -289,7 +315,7 @@ function EmissionSetup() {
                       Single Door
                     </ToggleButton>
                     <ToggleButton
-                      id={"8"}
+                      id={"10"}
                       type="radio"
                       variant="outline-success"
                       value="380"
@@ -307,6 +333,7 @@ function EmissionSetup() {
                 </Col>
                 <Col xs={7} md={6} className="d-flex justify-content-start">
                   <input
+                    className="text-center"
                     type="number"
                     value={fuelPersonal}
                     min={1}
@@ -319,12 +346,13 @@ function EmissionSetup() {
               </Row>
               <Row className="d-flex justify-content-center mb-3 mt-3">
                 <Col xs={7} md={6} className="d-flex justify-content-end">
-                  <label>Gas Cylinder Duration : </label>
+                  <label>Gas Cylinder Duration (Days): </label>
                 </Col>
                 <Col xs={7} md={6} className="d-flex justify-content-start">
                   <input
+                    className="text-center"
                     type="number"
-                    value={gasDuration}
+                    value={parseInt(gasDuration)}
                     min={1}
                     onChange={(e) => {
                       const newValue = parseInt(e.target.value);

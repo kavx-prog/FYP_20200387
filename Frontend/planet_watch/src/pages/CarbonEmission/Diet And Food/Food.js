@@ -5,12 +5,47 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import jwtDecode from "jwt-decode";
+import axiosInstance from "../../../axios";
 
 function Food() {
   const [numPeople, setNumPeople] = useState(1);
   const [selectedFood, setSelectedFood] = useState({});
   const [quantity, setQuantity] = useState({});
   const [objectID, setObjectID] = useState(null);
+
+  const token = localStorage.getItem("access_token");
+  const decodedToken = jwtDecode(token);
+  const userfromtoken = decodedToken.user_id;
+
+  function getLastObjectFromArray(jsonArray) {
+    if (jsonArray && jsonArray.length > 0) {
+      return jsonArray[jsonArray.length - 1];
+    } else {
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/emissionsetup/`
+        );
+        const existingRecord = response.data.filter(
+          (record) => record.user === userfromtoken
+        );
+
+        if (existingRecord && existingRecord.length > 0) {
+          const lastObject = getLastObjectFromArray(existingRecord);
+          setNumPeople(parseInt(lastObject.people_count));
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [userfromtoken]);
 
   useEffect(() => {
     // Disable backward navigation
@@ -46,8 +81,8 @@ function Food() {
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.user_id;
     return new Promise((resolve, reject) => {
-      axios
-        .post("http://localhost:8000/diet/", {
+      axiosInstance
+        .post("/diet/", {
           username: userId,
           food_emission: (parseFloat(totalConsumption).toFixed(2)),
         })
@@ -204,6 +239,11 @@ function Food() {
               &lt;&lt; Back To Home
             </Button>
           </Col> */}
+          <Col className="d-flex justify-content-start">
+            <Link to="/carbonDash">
+              <Button variant="success">&lt;&lt; Go Back To Home</Button>
+            </Link>
+          </Col>
           <Col className="d-flex justify-content-end">
             <Button variant="success" onClick={handleNavigate}>
               Beverages &gt;&gt;

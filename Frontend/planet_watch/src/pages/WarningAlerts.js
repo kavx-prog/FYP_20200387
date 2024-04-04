@@ -176,7 +176,7 @@ function WarningAlerts() {
           <h1 style={{ fontFamily: "Montserrat", textTransform: "uppercase" }}>
             Warning Alerts
             <img
-              src={require("../assets/images/alert.png")}
+              src={require("../assets/images/sign.png")}
               height={"80px"}
               style={{ float: "right" }}
             ></img>

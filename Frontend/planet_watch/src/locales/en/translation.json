@@ -14,7 +14,6 @@
   "projects": "Projects",
   "blogs_articles": "Blogs & Articles",
   "carbon_complaints": "Carbon Emission Complaints",
-  "carbon_complaints_reduce": "Carbon Emission Reduction Guidance",
   "issues": "Issues",
   "sponsors": "Sponsors",
   "climate_news": "Climate News",
@@ -156,7 +155,6 @@
   "projects" : "Projects",
   "blogs_articles" : "Blogs & Articles",
   "carbon_complaints" : "Carbon Emission Complaints",
-  "carbon_complaints_reduce": "Carbon Emission Reduction Guidance",
   "issues" : "Issues",
   "sponsors" : "Sponsors",
   "climate_news" : "Climate News",
@@ -227,6 +225,7 @@
   "sent sms":"Sent SMS",
   "more_options":"More Options",
   "configure_emission":"Configure Your Infromation",
-  "Your Details":"Your Details"
+  "Your Details":"Your Details",
+  "carbon_reduction_g": "Carbon Emission Reduction Guidence"
 
 }

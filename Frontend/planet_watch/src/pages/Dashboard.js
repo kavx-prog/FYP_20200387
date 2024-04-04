@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { BrowserRouter as Router, Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import AccountSetup from "./AccountSetup";
 import { useTranslation } from "react-i18next";
 import Button from "react-bootstrap/Button";
 
@@ -101,7 +102,8 @@ function Dashboard() {
           <p>{t("stay_informed_main_dashboard")}</p>
           <br></br>
           <div class="row row-cols-1 row-cols-md-3 g-4">
-            {/* alert */}
+
+            {/* alerts */}
             <Link to="/warnings" style={{ textDecoration: "none" }}>
               <div class="col" style={{ paddingLeft: "30px", height: "100%" }}>
                 <div
@@ -110,7 +112,7 @@ function Dashboard() {
                     width: "20rem",
                     backgroundColor: "white",
                     color: "black",
-                    height: "15rem",
+                    height: "100%",
                   }}
                 >
                   <div class="card-body">
@@ -121,130 +123,6 @@ function Dashboard() {
                         class="card-img-top"
                         alt="Alerts"
                         style={{ width: "50%" }}
-                      ></img>
-                    </center>
-                  </div>
-                </div>
-              </div>
-            </Link>
-            {/* tips */}
-            <Link to="/floodtips" style={{ textDecoration: "none" }}>
-              <div class="col" style={{ paddingLeft: "30px", height: "100%" }}>
-                <div
-                  class="card shadow"
-                  style={{
-                    width: "20rem",
-                    backgroundColor: "white",
-                    color: "black",
-                    height: "15rem",
-                  }}
-                >
-                  <div class="card-body">
-                    <center>
-                      <h5 class="card-title"> {t("tips_and_tricks")}</h5>
-                      <img
-                        src={require("../assets/images/bulb.png")}
-                        class="card-img-top"
-                        alt="Alerts"
-                        style={{ width: "50%" }}
-                      ></img>
-                    </center>
-                  </div>
-                </div>
-              </div>
-            </Link>
-            {/* emergency notification */}
-            <Link to="/authority" style={{ textDecoration: "none" }}>
-              <div class="col" style={{ paddingLeft: "30px", height: "100%" }}>
-                <div
-                  class="card shadow"
-                  style={{
-                    width: "20rem",
-                    backgroundColor: "white",
-                    color: "black",
-                    height: "100%",
-                  }}
-                >
-                  <div class="card-body">
-                    <center>
-                      <h5 class="card-title">
-                        {" "}
-                        {t("Emergency Notification Management")}
-                      </h5>
-                      <img
-                        src={require("../assets/images/call119.png")}
-                        class="card-img-top"
-                        alt="Alerts"
-                        style={{ width: "40%" }}
-                      ></img>
-                    </center>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </div>
-
-          <br></br>
-
-          <h3
-            style={{
-              fontFamily: "Montserrat",
-              textTransform: "uppercase",
-              fontWeight: "bold",
-            }}
-          >
-            {t("tools")}
-          </h3>
-          <p>{t("Stay_aware_of_air_quality_main_dashboard")}</p>
-          <br></br>
-          <div class="row row-cols-1 row-cols-md-3 g-4">
-            {/* air */}
-            <Link to="/airquality" style={{ textDecoration: "none" }}>
-              <div class="col" style={{ paddingLeft: "30px", height: "100%" }}>
-                <div
-                  class="card shadow"
-                  style={{
-                    width: "20rem",
-                    backgroundColor: "white",
-                    color: "black",
-                    height: "100%",
-                  }}
-                >
-                  <div class="card-body">
-                    <center>
-                      <h5 class="card-title">{t("air_quality_tracker")}</h5>
-                      <img
-                        src={require("../assets/images/air.png")}
-                        class="card-img-top"
-                        alt="Air Quality Tracker"
-                        style={{ width: "50%" }}
-                      ></img>
-                    </center>
-                  </div>
-                </div>
-              </div>
-            </Link>
-
-            {/* complain */}
-            <Link to="/addcomplaints" style={{ textDecoration: "none" }}>
-              <div class="col" style={{ paddingLeft: "30px", height: "100%" }}>
-                <div
-                  class="card shadow"
-                  style={{
-                    width: "20rem",
-                    backgroundColor: "white",
-                    color: "black",
-                    height: "100%",
-                  }}
-                >
-                  <div class="card-body">
-                    <center>
-                      <h5 class="card-title">{t("carbon_complaints")}</h5>
-                      <img
-                        src={require("../assets/images/complaint.png")}
-                        class="card-img-top"
-                        alt="Carbon Emission Complaints"
-                        style={{ width: "50%", paddingTop: "10px" }}
                       ></img>
                     </center>
                   </div>
@@ -274,18 +152,16 @@ function Dashboard() {
                         src={require("../assets/images/carbonfootprint .png")}
                         class="card-img-top"
                         alt="Carbon Footprint Calculator"
-                        style={{ width: "50%", paddingTop: "10px" }}
+                        style={{ width: "40%", paddingTop: "10px" }}
                       ></img>
                     </center>
                   </div>
                 </div>
               </div>
             </Link>
-            
-            {/* footprint reduction */}
-            
-            <Link to="/foods" style={{ textDecoration: "none" }}>
-              
+
+            {/* tips */}
+            <Link to="/floodtips" style={{ textDecoration: "none" }}>
               <div class="col" style={{ paddingLeft: "30px", height: "100%" }}>
                 <div
                   class="card shadow"
@@ -293,18 +169,17 @@ function Dashboard() {
                     width: "20rem",
                     backgroundColor: "white",
                     color: "black",
-                    height: "15rem",
+                    height: "100%",
                   }}
                 >
-                  
                   <div class="card-body">
                     <center>
-                      <h5 class="card-title">{t("carbon_complaints_reduce")}</h5>
+                      <h5 class="card-title"> {t("tips_and_tricks")}</h5>
                       <img
-                        src={require("../assets/images/co2 reduce.png")}
+                        src={require("../assets/images/bulb.png")}
                         class="card-img-top"
-                        alt="Carbon Emission Reduction Guidance"
-                        style={{ width: "50%", paddingTop: "10px" }}
+                        alt="Alerts"
+                        style={{ width: "50%" }}
                       ></img>
                     </center>
                   </div>
@@ -314,11 +189,160 @@ function Dashboard() {
           </div>
 
           <br></br>
-          
+
+          <h3
+            style={{
+              fontFamily: "Montserrat",
+              textTransform: "uppercase",
+              fontWeight: "bold",
+            }}
+          >
+            {t("tools")}
+          </h3>
+          <p>{t("Stay_aware_of_air_quality_main_dashboard")}</p>
+          <br></br>
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+            
+            {/* air */}
+            <Link to="/airquality" style={{ textDecoration: "none" }}>
+              <div class="col" style={{ paddingLeft: "30px", height: "100%" }}>
+                <div
+                  class="card shadow"
+                  style={{
+                    width: "20rem",
+                    backgroundColor: "white",
+                    color: "black",
+                    height: "100%",
+                  }}
+                >
+                  <div class="card-body">
+                    <center>
+                      <h5 class="card-title">{t("air_quality_tracker")}</h5>
+                      <img
+                        src={require("../assets/images/air.png")}
+                        class="card-img-top"
+                        alt="Air Quality Tracker"
+                        style={{ width: "50%" }}
+                      ></img>
+                    </center>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            {/* free food */}
+            <Link to="/locshow" style={{ textDecoration: "none" }}>
+              <div class="col" style={{ paddingLeft: "30px", height: "100%" }}>
+                <div
+                  class="card shadow"
+                  style={{
+                    width: "20rem",
+                    backgroundColor: "white",
+                    color: "black",
+                    height: "100%",
+                  }}
+                >
+                  <div class="card-body">
+                    <center>
+                      <h5 class="card-title"> {t("free_food_resources")}</h5>
+                      <img
+                        src={require("../assets/images/diet.png")}
+                        class="card-img-top"
+                        alt="Free Food Resources"
+                        style={{ width: "50%" }}
+                      ></img>
+                    </center>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            {/* complaints */}
+            <Link to="/addcomplaints" style={{ textDecoration: "none" }}>
+              <div class="col" style={{ paddingLeft: "30px", height: "100%" }}>
+                <div
+                  class="card shadow"
+                  style={{
+                    width: "20rem",
+                    backgroundColor: "white",
+                    color: "black",
+                    height: "100%",
+                  }}
+                >
+                  <div class="card-body">
+                    <center>
+                      <h5 class="card-title">{t("carbon_complaints")}</h5>
+                      <img
+                        src={require("../assets/images/complaint.png")}
+                        class="card-img-top"
+                        alt="Carbon Emission Complaints"
+                        style={{ width: "50%", paddingTop: "10px" }}
+                      ></img>
+                    </center>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            {/* reduction  */}
+            <Link to="/foods" style={{ textDecoration: "none" }}>
+              <div class="col" style={{ paddingLeft: "30px", height: "100%" }}>
+                <div
+                  class="card shadow"
+                  style={{
+                    width: "20rem",
+                    backgroundColor: "white",
+                    color: "black",
+                    height: "100%",
+                  }}
+                >
+                  <div class="card-body">
+                    <center>
+                      <h5 class="card-title">{t("carbon_reduction_g")}</h5>
+                      <img
+                        src={require("../assets/images/co2 reduce.png")}
+                        class="card-img-top"
+                        alt="Carbon Emission Complaints"
+                        style={{ width: "50%", paddingTop: "10px" }}
+                      ></img>
+                    </center>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            {/* <Link to="/emergencykit" style={{ textDecoration: "none" }}>
+              <div class="col" style={{ paddingLeft: "30px", height: "100%" }}>
+                <div
+                  class="card shadow"
+                  style={{
+                    width: "20rem",
+                    backgroundColor: "white",
+                    color: "black",
+                    height: "100%",
+                  }}
+                >
+                  <div class="card-body">
+                    <center>
+                      <h5 class="card-title"> {t("emergency kit")}</h5>
+                      <img
+                        src={require("../assets/images/emergencykit2.jpg")}
+                        class="card-img-top"
+                        alt="Alerts"
+                        style={{ width: "50%" }}
+                      ></img>
+                    </center>
+                  </div>
+                </div>
+              </div>
+            </Link> */}
+          </div>
           <br></br>
         </div>
       </Container>
       <Footer></Footer>
+      {console.log("hdhdh", firstTimeLogin)}
+      {!firstTimeLogin && <AccountSetup />}
     </div>
   );
 }

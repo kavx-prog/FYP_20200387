@@ -14,7 +14,6 @@
   "projects": "ව්‍යාපෘති",
   "blogs_articles": "බ්ලොග් සහ ලිපි",
   "carbon_complaints": "කාබන් විමෝචන පැමිණිලි",
-  "carbon_complaints_reduce": "කාබන් විමෝචනය අඩු කිරීමේ මාර්ගෝපදේශය",
   "issues": "ගැටලු",
   "sponsors": "අනුග්‍රාහකයන්",
   "climate_news": "දේශගුණ පුවත්",
@@ -157,7 +156,6 @@
   "projects" : "ව්‍යාපෘති",
   "blogs_articles" : "බ්ලොග් සහ ලිපි",
   "carbon_complaints" : "කාබන් විමෝචන පැමිණිලි",
-  "carbon_complaints_reduce": "කාබන් විමෝචනය අඩු කිරීමේ මාර්ගෝපදේශය",
   "issues" : "ගැටලු",
   "sponsors" : "අනුග්‍රාහකයන්",
   "climate_news" : "දේශගුණ පුවත්",
@@ -228,5 +226,6 @@
   "sent sms":"කෙටි පණිවුඩ සේවාව යවා ඇත",
   "more_options":"වෙනත් විකල්ප",
   "configure_emission":"ඔබේ තොරතුරු යාවත්කාලීන කරන්න",
-  "Your Details": "ඔබේ විස්තර"
+  "Your Details": "ඔබේ විස්තර",
+  "carbon_reduction_g": "කාබන් විමෝචනය අඩු කිරීමේ මාර්ගෝපදේශය"
 }

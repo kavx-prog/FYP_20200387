@@ -3,17 +3,45 @@ import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import axiosInstance from "../axios";
 import "../assets/styles/accountpopup.css";
-import { Link } from "react-router-dom";
 function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  function signin(e) {
+    e.preventDefault();
+    const loggedInUser = {
+      username,
+      password,
+    };
+    axiosInstance
+      .post("api/token/", loggedInUser)
+      .then((res) => {
+        console.log(res.data);
+        localStorage.setItem("access_token", res.data.access);
+        localStorage.setItem("refresh-token", res.data.refresh);
+        axiosInstance.defaults.headers["Authorization"] =
+          "Bearer" + localStorage.getItem("access_token");
+
+        window.location.replace("/dashboard");
+      })
+      .catch((err) => {
+        console.log(err.message);
+        if (err.message === "Request failed with status code 401") {
+          setErrorMessage("Please enter valid username or password");
+          console.log(errorMessage);
+        }
+      });
+  }
   return (
     <div style={{ backgroundColor: "white" }}>
-      <div class="row ">
-        <div class="col" style={{ backgroundColor: "black" }}>
+      <div class="row">
+        <div class="col" style={{ backgroundColor: "white" }}>
           <div>
             <img
               src={require("../assets/images/logo.png")}
               height={"80px"}
-              style={{ float: "left" }}
+              style={{ float: "right" }}
             ></img>
           </div>
           <img
@@ -41,10 +69,11 @@ function Login() {
           <p>
             Don't have an account?{" "}
             <a href="/signup" style={{ textDecoration: "none" }}>
+              {" "}
               Sign up
             </a>
           </p>
-          <form>
+          <form onSubmit={signin}>
             <div class="mb-3">
               <label
                 for="exampleInputUsername"
@@ -58,6 +87,9 @@ function Login() {
                 class="form-control"
                 id="username"
                 aria-describedby="emailHelp"
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
                 required="true"
               />
               {/* <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> */}
@@ -74,6 +106,9 @@ function Login() {
                 type="password"
                 class="form-control"
                 id="password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 required="true"
               />
             </div>
@@ -92,7 +127,6 @@ function Login() {
             </div>
 
             <div class="d-grid gap-2">
-            <Link to="/dashboard" style={{ textDecoration: "none" }}>
               <button
                 type="submit"
                 style={{
@@ -105,10 +139,9 @@ function Login() {
               >
                 Submit
               </button>
-              </Link>
             </div>
             <center>
-              <p style={{ color: "red" }}></p>
+              <p style={{ color: "red" }}>{errorMessage}</p>
             </center>
           </form>
         </div>
