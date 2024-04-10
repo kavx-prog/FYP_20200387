@@ -250,7 +250,7 @@ def ThunderForecast():
 
 
 ####################### Models are scheduled to run at the begining of every week (Sunday 12.00 a.m) #########################
-# floodForecast()
+floodForecast()
 # schedule.every().sunday.at('00.00').do(floodForecast)
 # schedule.every(1).minutes.do(floodForecast)
 # while True:
@@ -272,8 +272,8 @@ def floodImpact():
         # Notify.lk API endpoint and credentials
         notifylk_url = 'https://app.notify.lk/api/v1/send'
         # api_key = 'ZVJvh0Dr9jvo3cbdMHBr'  # Replace with your actual API key
-        api_key = 'ROQP9uElHwXsxQWVR0kC'
-        user_id = '25600'
+        api_key = 'Zc4QWXZEgGDS6XRD7oee'
+        user_id = '26934'
         sender_id="NotifyDEMO"
         
         if impact_instance.impactRange == [0]:

@@ -41,25 +41,19 @@ function Signup() {
   //   }
 
   return (
-    <div style={{ backgroundColor: "white" }}>
+    <div>
+      <Container>
+      <div style={{ backgroundColor: "white", display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
       <div class="row">
-        <div class="col" style={{ backgroundColor: "white" }}>
-          <div>
-            <img
-              src={require("../assets/images/logo.png")}
-              height={"80px"}
-              style={{ float: "right" }}
-            ></img>
-          </div>
+      <div class="col">
           <img
-            src={require("../assets/images/earthsave.jpeg")}
+            src={require("../assets/images/new2.jpg")}
             class="img-fluid rounded-start"
             alt="..."
-            style={{ width: "100%" }}
           />
         </div>
         <div class="col">
-          <br></br> <br></br> <br></br>
+          
           <Container style={{ backgroundColor: "#F8FFF" }}>
             <p
               style={{ fontSize: "36px", fontWeight: "700", color: "#3A3541" }}
@@ -171,20 +165,22 @@ function Signup() {
                 >
                   Submit
                 </button>
+                <br></br>
               </div>
-              <center>
-                <p>
-                  Back to
-                  <a href="/login" style={{ textDecoration: "none" }}>
+              
+                <p style={{ display: "flex", justifyContent: "flex-end" }}>
+                  Back to 
+                  <a href="/login" style={{ marginLeft: "5px", textDecoration: "none" }}>
                     {" "}
                     Sign in
                   </a>
                 </p>
-              </center>
-            </form>
+              </form>
           </Container>
         </div>
       </div>
+      </div>
+      </Container>
     </div>
   );
 }

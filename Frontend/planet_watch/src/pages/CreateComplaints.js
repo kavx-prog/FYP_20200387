@@ -3,11 +3,10 @@ import { Col, Container, Row, Modal } from "react-bootstrap";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 function CreateComplaints() {
-  
   const [showPopup, setShowPopup] = useState(false);
   const { t } = useTranslation();
 
@@ -40,12 +39,9 @@ function CreateComplaints() {
       });
   };
 
-
-
-
   return (
     <div>
-       <Header></Header>
+      <Header></Header>
       <br></br>
       <Container>
         <div class="p-3 mb-2 bg-white text-dark">
@@ -67,11 +63,15 @@ function CreateComplaints() {
                 <label for="exampleFormControlInput1" className="form-label">
                   Complaint Title
                 </label>
-                <input class="form-control" id="complaintTitle" required></input>
+                <input
+                  class="form-control"
+                  id="complaintTitle"
+                  required
+                ></input>
               </Col>
               <Col>
                 <label for="exampleFormControlInput1" className="form-label">
-                   Date
+                  Date
                 </label>
                 <input
                   type="date"
@@ -83,23 +83,19 @@ function CreateComplaints() {
             </Row>
             <Row className="mb-3">
               <Col>
-              <div className="mb-3">
-              <label for="Nature of the Issue" className="form-label">
-                Nature of the Complaint
-              </label>
-              <select
-                className="form-select"
-                id="complaintType"
-                required
-              >
-                <option value="" disabled selected>
-                  Select your option
-                </option>
-                <option value="Vehicle">Vehicle</option>
-                <option value="Forestry">Forestry</option>
-                <option value="Coastal">Coastal</option>
-              </select>
-            </div>
+                <div className="mb-3">
+                  <label for="Nature of the Issue" className="form-label">
+                    Nature of the Complaint
+                  </label>
+                  <select className="form-select" id="complaintType" required>
+                    <option value="" disabled selected>
+                      Select your option
+                    </option>
+                    <option value="Vehicle">Vehicle</option>
+                    <option value="Forestry">Forestry</option>
+                    <option value="Coastal">Coastal</option>
+                  </select>
+                </div>
               </Col>
               <Col>
                 <label for="image" class="form-label">
@@ -110,23 +106,25 @@ function CreateComplaints() {
             </Row>
             <Row className="mb-3">
               <Col>
-              <div className="mb-3">
-              <label for="Nature of the Issue" className="form-label">
-                Authority
-              </label>
-              <select
-                className="form-select"
-                id="authority"
-                required
-              >
-                <option value="" disabled selected>
-                  Select your option
-                </option>
-                <option value="CEA">Central Environtmental Authority</option>
-                <option value="Forestry">The Wildlife & Nature Protection Society</option>
-                <option value="Coastal">Srilanka Sustainable Energy Authority</option>
-              </select>
-            </div>
+                <div className="mb-3">
+                  <label for="Nature of the Issue" className="form-label">
+                    Authority
+                  </label>
+                  <select className="form-select" id="authority" required>
+                    <option value="" disabled selected>
+                      Select your option
+                    </option>
+                    <option value="CEA">
+                      Central Environtmental Authority
+                    </option>
+                    <option value="Forestry">
+                      The Wildlife & Nature Protection Society
+                    </option>
+                    <option value="Coastal">
+                      Srilanka Sustainable Energy Authority
+                    </option>
+                  </select>
+                </div>
               </Col>
               <Col>
                 <label for="exampleFormControlInput1" className="form-label">
@@ -140,7 +138,12 @@ function CreateComplaints() {
                 <label for="exampleFormControlInput1" className="form-label">
                   Briefly explain your Complaint
                 </label>
-                <textarea rows="3" class="form-control" id="content" required></textarea>
+                <textarea
+                  rows="3"
+                  class="form-control"
+                  id="content"
+                  required
+                ></textarea>
               </Col>
             </Row>
             <Row className="mt-5">
@@ -148,22 +151,27 @@ function CreateComplaints() {
                 <button type="submit" className="btn btn-success">
                   Submit
                 </button>
-                <a href="#">
-                  <button
-                    style={{
-                      float: "right",
-                    }}
-                    className="btn btn-dark"
+              </Col>
+              <Col>
+                <button
+                  style={{
+                    float: "right",
+                  }}
+                  className="btn btn-dark"
+                >
+                  <a
+                    href="/dashboard"
+                    style={{ color: "white", textDecoration: "none" }}
                   >
-                    Back
-                  </button>
-                </a>
+                    Back to Dashboard
+                  </a>
+                </button>
               </Col>
             </Row>
           </form>
         </div>
         <Modal show={showPopup} onHide={() => setShowPopup(false)}>
-        <Modal.Header closeButton>
+          <Modal.Header closeButton>
             <Modal.Title>{t("success")}</Modal.Title>
           </Modal.Header>
           <Modal.Body className="text-center">

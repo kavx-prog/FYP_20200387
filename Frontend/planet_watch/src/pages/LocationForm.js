@@ -20,12 +20,14 @@ function LocationForm({ onLocationSubmit }) {
   const { t } = useTranslation();
 
   const handleMapClick = (e) => {
-    // const { lat, lng } = e.latLng.toJSON();
-
-    setMarkerPositionlan(e.latLng.lat());
-    // onMapClick({ lat, lng });
-    setMarkerPositionlng(e.latLng.lng());
+    setMarkerPositionlan(parseFloat(e.latLng.lat().toFixed(6))); // Round to 6 decimals
+    setMarkerPositionlng(parseFloat(e.latLng.lng().toFixed(6)));
+    // Update the Marker position with the clicked coordinates
+    setPosition({ lat: e.latLng.lat(), lng: e.latLng.lng() });
   };
+ 
+  const [position, setPosition] = useState({ lat: 7.8731, lng: 80.7718 });
+
   const mcenter = {
     lat: 7.8731,
     lng: 80.7718,
@@ -164,13 +166,13 @@ function LocationForm({ onLocationSubmit }) {
               mapContainerStyle={{ width: "90%", height: "700px" }}
               center={{ lat: 7.8731, lng: 80.7718 }}
               zoom={8}
-              // onClick={handleMapClick}
+              onClick={handleMapClick}
             >
               <Marker
-                position={mcenter}
-                clickable={true}
-                draggable={true}
-                onClick={handleMapClick}
+                position={position} // use state variable 'position' here
+    clickable={true}
+    draggable={true}
+    onClick={handleMapClick}
               />
             </GoogleMap>
           </LoadScript>
