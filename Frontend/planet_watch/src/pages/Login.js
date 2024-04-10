@@ -34,21 +34,16 @@ function Login() {
       });
   }
   return (
-    <div style={{ backgroundColor: "white" }}>
+    
+    <div>
+      <Container>
+      <div style={{ backgroundColor: "white", display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
       <div class="row">
-        <div class="col" style={{ backgroundColor: "white" }}>
-          <div>
-            <img
-              src={require("../assets/images/logo.png")}
-              height={"80px"}
-              style={{ float: "right" }}
-            ></img>
-          </div>
+        <div class="col">
           <img
-            src={require("../assets/images/earthsave.jpeg")}
+            src={require("../assets/images/home.jpg")}
             class="img-fluid rounded-start"
             alt="..."
-            style={{ width: "100%" }}
           />
         </div>
         <div class="col">
@@ -84,14 +79,16 @@ function Login() {
               </label>
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="username"
                 aria-describedby="emailHelp"
                 onChange={(e) => {
                   setUsername(e.target.value);
                 }}
-                required="true"
+                required={true}
+                style={{ width: "90%" }}
               />
+
               {/* <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> */}
             </div>
             <div class="mb-3">
@@ -110,6 +107,7 @@ function Login() {
                   setPassword(e.target.value);
                 }}
                 required="true"
+                style={{ width: "90%" }}
               />
             </div>
             <div class="mb-3 form-check">
@@ -121,7 +119,7 @@ function Login() {
               <label class="form-check-label" for="exampleCheck1">
                 Check me out
               </label>
-              <a href="" style={{ float: "right", textDecoration: "none" }}>
+              <a href="" style={{ float: "right", textDecoration: "none" , width: "30%"}}>
                 Forgot passowrd?
               </a>
             </div>
@@ -140,12 +138,15 @@ function Login() {
                 Submit
               </button>
             </div>
+            <br></br>
             <center>
               <p style={{ color: "red" }}>{errorMessage}</p>
             </center>
           </form>
         </div>
       </div>
+      </div>
+      </Container>
     </div>
   );
 }

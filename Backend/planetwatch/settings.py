@@ -137,8 +137,8 @@ DATABASES = {
             'NAME': 'planetwatchdb',
             'ENFORCE_SCHEMA': False,
             'CLIENT': {
-                'host': 'mongodb+srv://kaveen20200387:kaveen123@cluster0.i66wecd.mongodb.net/planetwatchDb?retryWrites=true&w=majority&appName=Cluster0'
-                
+                # 'host': 'mongodb+srv://kaveen20200387:kaveen123@cluster0.i66wecd.mongodb.net/planetwatchDb?retryWrites=true&w=majority&appName=Cluster0'
+                'host': 'mongodb+srv://kaveenGune:6cqp6jhl86N3A4Qk@cluster0.i66wecd.mongodb.net/planetwatchDb?retryWrites=true&w=majority&appName=Cluster0'                
             }  
         }
 }

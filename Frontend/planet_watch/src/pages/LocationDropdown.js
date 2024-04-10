@@ -7,12 +7,13 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { useTranslation } from "react-i18next";
+import "../assets/styles/locDropdown.css";
 
 const LocationDropdown = () => {
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [map, setMap] = useState(null);
-  const googleMapsApiKey = "AIzaSyAM7fsnOFQ-z7tYeJSUeVeGLvyHHLfJgYg"; // Replace with your API key
+  const googleMapsApiKey = "AIzaSyAM7fsnOFQ-z7tYeJSUeVeGLvyHHLfJgYg"; 
 
   const { t } = useTranslation();
 
@@ -64,13 +65,10 @@ const LocationDropdown = () => {
                 <label className="mr-2">
                   {t("s_location_r")} : {" "}
                 </label>
-                <select onChange={handleLocationSelect}>
+                <select className="location-dropdown" onChange={handleLocationSelect}>
                   <option value="">Location</option>
                   {locations.map((location) => (
-                    <option
-                      key={location.locationName}
-                      value={location.locationName}
-                    >
+                    <option key={location.locationName} value={location.locationName}>
                       {location.locationName}
                     </option>
                   ))}
