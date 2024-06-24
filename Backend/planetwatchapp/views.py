@@ -47,7 +47,7 @@ mlmodels_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'm
 # Load the joblib file from the mlmodels directory
 model = load(os.path.join(mlmodels_path, 'floodPredictionModel.joblib'))
 impactModel = load(os.path.join(mlmodels_path, 'impactAssessment.joblib'))
-thundermodel = load(os.path.join(mlmodels_path,'thunderModel.joblib'))
+thundermodel = load(os.path.join(mlmodels_path,'thunderPredictionModel.joblib'))
 thunderimpactModel = load(os.path.join(mlmodels_path,'ThunderDamageKNN.joblib'))
 
 class EmissionSetupViewSet (viewsets.ModelViewSet):

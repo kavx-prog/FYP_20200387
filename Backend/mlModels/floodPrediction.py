@@ -114,12 +114,12 @@ print("Correlation:", correlation)
 print("P-values:", p_values)
 print("T-values:", t_values)
 
-
 # Set the threshold values for p-values and t-values
+p_threshold = 0.05  # Adjust this value as needed
+t_threshold = 1.96  # Adjust this value as needed
 
 # Create an instance of the SVC model
-model p_threshold = 0.05  # Adjust this value as needed
-t_threshold = 1.96 # Adjust this value as needed
+model = SVC()
 
 # Select the best features based on p-values and t-values
 selected_features = []
@@ -129,7 +129,6 @@ for i in range(len(p_values)):
 
 # Print the selected features
 print("Selected Features:", selected_features)
-=SVC()
 
 # Fit the model to the training data
 model.fit(X_train, y_train)
